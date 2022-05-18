@@ -18,30 +18,26 @@
 </head>
 <body>
     <h1>National Blog</h1>
-    <h2 style="color:red;">posts</h2>
-    <form method="POST" action="App/createPost.php">
-        <button type="submit" name="add">add new post</button>    
+    <?php $post_id = $_GET['id']?> 
+    <h5>Comments of post number <?php echo $post_id?></h5>
+
+    <form method="POST" action="createComment.php">
+        <button type="submit" name="add">add new comment</button>    
     </form>
-    <table style="margin: 10px;">
+    <table>
         <tr>
         <th>id</th>
         <th padding: 50px;>content</th>
-        <th>date</th>
-        <th>Action</th>
         </tr>
         <?php 
-        include __DIR__."/App/Post.php";
-        $post = new Post();
-        $posts = $post->getPosts();
-        while ($row = mysqli_fetch_assoc($posts)) {
+        include __DIR__."/Comment.php";
+        $comment = new Comment();
+        $comments = $comment->GetCommentByPost();
+        while ($row = mysqli_fetch_assoc($comments)) {
         ?>
         <tr>
             <td><?php echo $row['id']; ?></td>
             <td><?php echo $row['content']; ?></td>
-            <td><?php echo $row['created_at']; ?></td>
-            <td>
-             <button><a href="App/details.php?id=<?php echo ($row["id"]) ?>" name="show"> Show Comments</a></button>
-            </td>
         </tr>
         <?php } ?>
         
